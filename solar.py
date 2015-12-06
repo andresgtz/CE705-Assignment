@@ -12,8 +12,6 @@ if(len(sys.argv) < 2):
 genElec = dicReadings = {} 
 
 try:
-
-	#genElec = dicReadings = {}	
 	with open(sys.argv[1],'r') as f:
 		for line in f:
 			#Ignore commented lines
@@ -24,26 +22,31 @@ try:
 				#First column is the day number and second the recording
 				dicReadings[int(temp[0])] = float(temp[1])
 	
-	
-	#Fill in for the missing values
-	prevKey = next(iter(dicReadings))
-	it = 0 
-	for key in list(dicReadings):
-		if(it not in list(dicReadings)):
-			it_temp = it
-			for i in range(it_temp,key):
-				genElec[i] = (dicReadings[key] - dicReadings[prevKey])/(key-prevKey)
-				it +=1
-		else:		
-			genElec[it] = dicReadings[key] - dicReadings[prevKey]
-			it += 1	
-		prevKey = key
-	
-
-	for key, value in genElec.items():
-		print(key,value)	
 		
 except:
 	print("File Problem", file=sys.stderr)
 	exit(2)
-			
+
+		
+#Fill in for the missing values
+prevKey = next(iter(dicReadings))
+it = 0 
+for key in list(dicReadings):
+	if(it not in list(dicReadings)):
+		it_temp = it
+		for i in range(it_temp,key):
+			genElec[i] = (dicReadings[key] - dicReadings[prevKey])/(key-prevKey)
+			it +=1
+	else:		
+		genElec[it] = dicReadings[key] - dicReadings[prevKey]
+		it += 1	
+	prevKey = key
+
+
+#Print mean amount generated per day
+mean = 0
+for key,value in genElec.items():
+	mean += value	
+mean = mean / max(genElec.keys())	
+print(mean)
+		
