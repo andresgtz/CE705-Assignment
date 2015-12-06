@@ -11,6 +11,7 @@ if(len(sys.argv) < 2):
 
 genElec = dicReadings = {} 
 
+#Use try-except to open the file in order to protect it.
 try:
 	with open(sys.argv[1],'r') as f:
 		for line in f:
