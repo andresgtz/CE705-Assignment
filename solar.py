@@ -1,7 +1,8 @@
-""" DESCRIPCION DEL PROGRAMA, PURPOSE, MIS DATOS"""
+#!/usr/bin/env python3
+""" DESCRIPCION DEL PROGRAMA, librerias, PURPOSE, MIS DATOS"""
 
-import sys, string, math
-
+import sys, string, math, matplotlib.pyplot as plt
+from cycler import cycler #Colors in the line
 # Verify if the user gives the file name via terminal, if not print the correct
 # way to use the program.
 
@@ -87,10 +88,42 @@ for key,value in genElec.items():
 #print mean and stdeviation per group of 30:
 print("\n--------Mean and Std.Deviation pero chunk of 30 data--------")
 c = 1
+meanChunks = []
+sdChunks = []
 for i in listGen:
 	print("\nChunk %d" % c)
 	print("Mean: %f" % mean(i))
+	meanChunks.append(mean(i))	
 	print("Standard Deviation: %f" % sd(i,mean(i)))
+	sdChunks.append(sd(i,mean(i)))
 	c += 1
 #for i in listGen:
-#	print("\n",i)	
+#	print("\n",i)
+
+#Pyplot settings
+#plot
+plt.grid(True)
+plt.xlabel('Chunk')
+plt.ylabel('Mean Amount Generated')
+
+
+#Plot mean amount for each 30 day chunk	
+
+plt.plot(list(range(1,c)),meanChunks, color = 'k')
+
+#Plot mean amount plus one std deviation
+meanPlusSD = []
+for i in range(0,len(meanChunks)):
+	meanPlusSD.append(meanChunks[i] + sdChunks[i])
+plt.plot(list(range(1,c)),meanPlusSD, color = 'r')
+
+#Plot mean amount minus one std deviation
+meanMinusSD = []
+for i in range(0,len(meanChunks)):
+	meanMinusSD.append(meanChunks[i] - sdChunks[i])
+plt.plot(list(range(1,c)),meanMinusSD, color = 'r')
+
+#Plot function that looks like data
+
+plt.show()
+
