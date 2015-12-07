@@ -9,7 +9,7 @@ if(len(sys.argv) < 2):
 	print("Usage: solar.py <filename>",file=sys.stderr)
 	exit(1)
 
-genElec = dicReadings = {} 
+dicReadings = {} 
 
 #Use try-except to open the file in order to protect it.
 try:
@@ -29,25 +29,38 @@ except:
 	exit(2)
 
 		
-#Fill in for the missing values
-prevKey = next(iter(dicReadings))
-it = 0 
-for key in list(dicReadings):
-	if(it not in list(dicReadings)):
-		it_temp = it
-		for i in range(it_temp,key):
-			genElec[i] = (dicReadings[key] - dicReadings[prevKey])/(key-prevKey)
-			it +=1
-	else:		
-		genElec[it] = dicReadings[key] - dicReadings[prevKey]
-		it += 1	
-	prevKey = key
+#Calculate amounts generated per day
+genElec = {}
+it = 1
+for key in list(dicReadings.keys())[1:]:
+	if(key == it):
+		genElec[it] = dicReadings[it] - dicReadings[it-1]
+	#In this case there is no measure for the day so we find an avg for the amount generated
+	elif(it != key):
+		for i in range(it,key):
+			genElec[i] = (dicReadings[key] - dicReadings[it-1])/ (key - (it - 1))
+		it = key	
+	it += 1
 
 
 #Print mean amount generated per day
+print("\nMean amount generated:")
 mean = 0
 for key,value in genElec.items():
 	mean += value	
 mean = mean / max(genElec.keys())	
 print(mean)
-		
+
+#Print min amount generated and day/s
+print("\nMinimum amount generated: (day, amount)")
+minValue = min(genElec.values())
+for key,value in genElec.items():
+	if(minValue == value):
+		print(key, value)
+
+#Print max amount generated and day/s
+print("\nMaximum amount generated: (day, amount)")
+maxValue = max(genElec.values())
+for key,value in genElec.items():
+	if(maxValue == value):
+		print(key,value)
