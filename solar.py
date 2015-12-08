@@ -38,6 +38,16 @@ def sd(d, avg):
 		s += pow(value - avg,2)
 	return math.sqrt(s/len(d))
 
+# Definition of function RMSE, this function calculates the root mean square
+# error between two lists of values with equal sizes.
+
+def RMSE(l1,l2):
+	result = 0
+	if(len(l1) == len(l2)):
+		for i in range(0,len(l1)):
+			result += math.pow((l1[i] - l2[i]),2)
+		result = result/len(l1)
+	return math.sqrt(result)
 #-------------------------------------------------------------------------------
 # This section verifies if the user provides the file name via terminal, 
 # if it is not provided, the correct way of using the program will be printed.
@@ -105,7 +115,8 @@ for key in list(dicReadings.keys())[1:]:
 	# the amount generated
 	else:
 		for i in range(it,key+1):
-			genElec[i] = (dicReadings[key] - dicReadings[it-1])/ (key - (it - 1))
+			genElec[i] = ((dicReadings[key] - dicReadings[it-1])/ 
+					(key - (it - 1)))
 		it = key	
 	it += 1
 
@@ -142,7 +153,7 @@ for key,value in genElec.items():
 		listGen.append(d)
 
 #print mean and stdeviation per group of 30:
-print("\n--------Mean and Std.Deviation pero chunk of 30 data--------")
+print("\n--------Mean and Std.Deviation per chunk of 30 data--------")
 c = 1
 meanChunks = []
 sdChunks = []
@@ -177,8 +188,16 @@ for i in range(0,len(meanChunks)):
 plt.plot(list(range(1,c)),meanMinusSD, color = 'r')
 
 #Plot function that looks like data (sine)
-x = np.linspace(-7,50)	
+x = np.linspace(-7,50)
+
+#Save values in a list for later calculation of RMSE
+funValues = []
+for i in range(1,len(meanChunks)+1):
+	funValues.append(7*np.sin(.5*i) + 7)
+		
 plt.plot(7*np.sin(.5*x) + 7, color = 'g')
 plt.show()
 
-
+# Root mean square error calculation
+print("------Calculation of RMSE------")
+print(RMSE(meanChunks,funValues))
