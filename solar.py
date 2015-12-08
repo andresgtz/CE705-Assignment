@@ -253,7 +253,7 @@ for i in range(1,len(meanChunks)+1):
 	funValues.append(7*np.sin(.5*i) + 7)
 		
 plt.plot(7*np.sin(.5*x) + 7, color = 'g')
-plt.show()
+
 
 #-------------------------------------------------------------------------------
 # At last, this section of the code calculates the Root Mean squared error 
@@ -262,6 +262,9 @@ plt.show()
 #-------------------------------------------------------------------------------
 
 # Root mean square error calculation
-print("------Calculation of RMSE------")
+print("\n------Calculation of RMSE------")
 print(RMSE(meanChunks,funValues))
+
+# After all the calculations the program shows the graph
+plt.show()
 
