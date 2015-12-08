@@ -44,7 +44,10 @@
 #
 # Files used:
 #	In order to test the program the text file called generation.dat
-#	was used. This file was provided by the lecturer. 
+#	was used. This file was provided by the lecturer.
+#
+# Github repository:
+#	https://github.com/andresgtz/CE705-Assignment 
 #-------------------------------------------------------------------------------
 
 import sys, math, matplotlib.pyplot as plt, numpy as np
