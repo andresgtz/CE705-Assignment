@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 #-------------------------------------------------------------------------------
+# Date: 08/12/2015
 # Title: solar.py
 # Author: Andres Gutierrez Castano
 # PRID: GUTI01304
