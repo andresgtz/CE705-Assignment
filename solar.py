@@ -264,3 +264,4 @@ plt.show()
 # Root mean square error calculation
 print("------Calculation of RMSE------")
 print(RMSE(meanChunks,funValues))
+
